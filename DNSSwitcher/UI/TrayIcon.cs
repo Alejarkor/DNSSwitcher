@@ -51,7 +51,7 @@ namespace DNSSwitcher.UI
             trayIcon.ContextMenu = new ContextMenu(new[] {new MenuItem("Exit", Exit)});
             trayIcon.MouseClick += MouseClick;
 
-            // TODO: This setup for consistency should be here, probably.
+            // TODO: This setup for consistency shouldn't be here, probably.
             if (!DnsHelper.Connected)
                 trayIcon.Icon = errorIcon;
             else
