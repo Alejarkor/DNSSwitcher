@@ -1,4 +1,4 @@
 - Copia la carpeta DnsSwitcher a C:/Archivos de programa.
-- Ejecuta DnsSwitcher, te pedirá un montón de permisos de administrador, dáselos todos (no es un virus, lo prometo).
+- Ejecuta DnsSwitcher.exe, te pedirá un montón de permisos de administrador, dáselos todos (no es un virus, lo prometo).
 - Al ejecutarlo aparecerá en la bandeja de notificaciones un icono nuevo, dándole botón izquierdo cambias del dns de google al de itcl. En el de google funcionará spotify o la cadena ser, pero no el buzón o jira y viceversa.
 - Dándole botón derecho puedes elegir que se ejecute al iniciar windows o cambiar de tema.
