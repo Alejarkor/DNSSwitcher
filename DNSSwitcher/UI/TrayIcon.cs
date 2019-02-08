@@ -17,21 +17,6 @@ namespace DNSSwitcher.UI
         /// </summary>
         private readonly NotifyIcon trayIcon = new NotifyIcon();
 
-        /// <summary>
-        /// Icon for the happy face.
-        /// </summary>
-        private readonly Icon happyIcon = Resources.pera_Yxk_icon;
-
-        /// <summary>
-        /// Icon for the sad face.
-        /// </summary>
-        private readonly Icon sadIcon = Resources.limon_and_icon;
-
-        /// <summary>
-        /// Error icon.
-        /// </summary>
-        private readonly Icon errorIcon = Resources.sad2_xZP_icon;
-
         /// <inheritdoc />
         /// <summary>
         /// Constructor.
@@ -39,7 +24,9 @@ namespace DNSSwitcher.UI
         /// </summary>
         public TrayIcon()
         {
-            trayIcon = new NotifyIcon {Icon = trayIcon.Icon = sadIcon, Visible = true};
+            ThemeManager.Initialize();
+
+            trayIcon = new NotifyIcon {Icon = trayIcon.Icon = ThemeManager.CurrentTheme.ErrorIcon, Visible = true};
             InitializeContextMenu();
         }
 
@@ -48,22 +35,29 @@ namespace DNSSwitcher.UI
         /// </summary>
         private void InitializeContextMenu()
         {
-            trayIcon.ContextMenu = new ContextMenu(new[]
+            var themesMenu = new MenuItem("Theme");
+            foreach (var theme in ThemeManager.Themes)
             {
-                new MenuItem("Run on start up", SwitchStartUpProgram), new MenuItem("Exit", Exit)
-            });
+                var themeOption =
+                    new MenuItem(theme.Name, (sender, args) => ChangeTheme(theme.Name))
+                    {
+                        Checked = theme == ThemeManager.CurrentTheme
+                    };
+                themesMenu.MenuItems.Add(themeOption);
+            }
+
+            var runOnStartUp = new MenuItem("Run on start up", SwitchStartUpProgram);
+            var exit = new MenuItem("Exit", Exit);
+
+            trayIcon.ContextMenu = new ContextMenu();
+            trayIcon.ContextMenu.MenuItems.AddRange(new[] {themesMenu, runOnStartUp, exit});
+
             trayIcon.MouseClick += MouseClick;
             RefreshRunOnStartUp();
 
             // TODO: This setup for consistency shouldn't be here, probably.
-            // TODO: Is there anyway to refresh the icon if something changes?
-            if (!DnsHelper.Connected)
-                trayIcon.Icon = errorIcon;
-            else
-            {
-                trayIcon.Icon = sadIcon;
-                DnsHelper.SetDefaultDns();
-            }
+            DnsHelper.SetDefaultDns();
+            RefreshIcons();
         }
 
 
@@ -76,20 +70,26 @@ namespace DNSSwitcher.UI
         {
             if (e.Button != MouseButtons.Left) return;
 
-            // TODO: this logic shouldn't be in a ui class.
+            // TODO: this logic shouldn't be in a ui class (?).
             if (!DnsHelper.Connected) return;
             if (DnsHelper.UsingDefault)
-            {
-                trayIcon.Icon = happyIcon;
                 DnsHelper.SetGoogleDns();
-            }
             else
-            {
-                trayIcon.Icon = sadIcon;
                 DnsHelper.SetDefaultDns();
-            }
+            RefreshIcons();
         }
 
+        /// <summary>
+        /// Changes the app theme.
+        /// </summary>
+        /// <param name="themeName">Theme name.</param>
+        private void ChangeTheme(string themeName)
+        {
+            ThemeManager.ChangeTheme(themeName);
+            RefreshIcons();
+            RefreshSelectedTheme();
+        }
+        
         /// <summary>
         /// Switch if it is a windows start up program.
         /// </summary>
@@ -102,9 +102,32 @@ namespace DNSSwitcher.UI
         }
 
         /// <summary>
+        /// Refreshes the icons.
+        /// TODO: Is there anyway to call this method if something changes?
+        /// </summary>
+        private void RefreshIcons()
+        {
+            if (!DnsHelper.Connected)
+                trayIcon.Icon = ThemeManager.CurrentTheme.ErrorIcon;
+            else
+                trayIcon.Icon = DnsHelper.UsingDefault
+                    ? ThemeManager.CurrentTheme.DefaultDnsIcon
+                    : ThemeManager.CurrentTheme.PublicDnsIcon;
+        }
+
+        /// <summary>
+        /// Refreshes the selected theme on the menu.
+        /// </summary>
+        private void RefreshSelectedTheme()
+        {
+            foreach (MenuItem menuItem in trayIcon.ContextMenu.MenuItems[0].MenuItems)
+                menuItem.Checked = ThemeManager.CurrentTheme.Name == menuItem.Text;
+        }
+
+        /// <summary>
         /// Refreshes the run on start up button.
         /// </summary>
-        private void RefreshRunOnStartUp() => trayIcon.ContextMenu.MenuItems[0].Checked = Utilities.IsStartUpProgram;
+        private void RefreshRunOnStartUp() => trayIcon.ContextMenu.MenuItems[1].Checked = Utilities.IsStartUpProgram;
 
         /// <summary>
         /// Closes the app.
