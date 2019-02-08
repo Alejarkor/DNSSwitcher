@@ -48,10 +48,15 @@ namespace DNSSwitcher.UI
         /// </summary>
         private void InitializeContextMenu()
         {
-            trayIcon.ContextMenu = new ContextMenu(new[] {new MenuItem("Exit", Exit)});
+            trayIcon.ContextMenu = new ContextMenu(new[]
+            {
+                new MenuItem("Run on start up", SwitchStartUpProgram), new MenuItem("Exit", Exit)
+            });
             trayIcon.MouseClick += MouseClick;
+            RefreshRunOnStartUp();
 
             // TODO: This setup for consistency shouldn't be here, probably.
+            // TODO: Is there anyway to refresh the icon if something changes?
             if (!DnsHelper.Connected)
                 trayIcon.Icon = errorIcon;
             else
@@ -84,6 +89,22 @@ namespace DNSSwitcher.UI
                 DnsHelper.SetDefaultDns();
             }
         }
+
+        /// <summary>
+        /// Switch if it is a windows start up program.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SwitchStartUpProgram(object sender, EventArgs e)
+        {
+            Utilities.SwitchStartUpProgram();
+            RefreshRunOnStartUp();
+        }
+
+        /// <summary>
+        /// Refreshes the run on start up button.
+        /// </summary>
+        private void RefreshRunOnStartUp() => trayIcon.ContextMenu.MenuItems[0].Checked = Utilities.IsStartUpProgram;
 
         /// <summary>
         /// Closes the app.
