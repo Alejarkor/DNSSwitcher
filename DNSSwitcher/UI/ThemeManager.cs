@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using WindowsFormsApp1.Properties;
+using DNSSwitcher.Properties;
 using Newtonsoft.Json;
 
 namespace DNSSwitcher.UI
@@ -59,8 +59,10 @@ namespace DNSSwitcher.UI
         private static void LoadThemes() =>
             themes = new List<Theme>
             {
-                new Theme("Fruits", Resources.pera_Yxk_icon, Resources.limon_and_icon, Resources.sad2_xZP_icon),
-                new Theme("Emojis", Resources.happy_is8_icon, Resources.sad_lQk_icon, Resources.sad2_xZP_icon)
+                new Theme("Fruits", Resources.pera_Yxk_icon, Resources.limon_Patri),
+                new Theme("Emojis", Resources.happy2_GEs_icon, Resources.sad_lQk_icon),
+                new Theme("Patri", Resources.panda_Patri, Resources.limon_Patri)
+                
             };
 
         /// <summary>
@@ -118,6 +120,20 @@ namespace DNSSwitcher.UI
         /// Error icon.
         /// </summary>
         public readonly Icon ErrorIcon;
+
+        /// <summary>
+        /// Constructor for the theme.
+        /// </summary>
+        /// <param name="name">Name for the theme.</param>
+        /// <param name="publicDnsIcon">Icon for the public dns.</param>
+        /// <param name="defaultDnsIcon">Icon for the default dns.</param>
+        public Theme(string name, Icon publicDnsIcon, Icon defaultDnsIcon)
+        {
+            Name = name;
+            PublicDnsIcon = publicDnsIcon;
+            DefaultDnsIcon = defaultDnsIcon;
+            ErrorIcon = Resources.sad2_xZP_icon;
+        }
 
         /// <summary>
         /// Serializable theme corresponding to this one.

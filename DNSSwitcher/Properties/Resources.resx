@@ -130,6 +130,12 @@
   <data name="limon_and_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\limon_and_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="limon_Patri" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\limon_Patri.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="panda_Patri" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\panda_Patri.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pera_Yxk_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\pera_yxk_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

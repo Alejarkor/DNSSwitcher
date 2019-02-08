@@ -60,7 +60,7 @@
     <Compile Include="UI\TrayIcon.cs" />
     <Compile Include="Utilities.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -91,6 +91,8 @@
     <Content Include="Resources\pera_Yxk_icon.ico" />
     <Content Include="Resources\sad2_xZP_icon.ico" />
     <Content Include="Resources\sad_lQk_icon.ico" />
+    <Content Include="Resources\limon_Patri.ico" />
+    <Content Include="Resources\panda_Patri.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
