@@ -59,7 +59,7 @@ namespace DNSSwitcher.UI
         private static void LoadThemes() =>
             themes = new List<Theme>
             {
-                new Theme("Fruits", Resources.pera_Yxk_icon, Resources.limon_Patri),
+                new Theme("Fruits", Resources.pera_Yxk_icon, Resources.limon_and_icon),
                 new Theme("Emojis", Resources.happy2_GEs_icon, Resources.sad_lQk_icon),
                 new Theme("Patri", Resources.panda_Patri, Resources.limon_Patri)
                 
